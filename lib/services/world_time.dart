@@ -24,18 +24,29 @@ class WorldTime{
       // print(data);
 
       // get the properties from data
-      String datetime = data['datetime'];
+      // String datetime = data['utc_datetime'];
+      int datetime = data['unixtime'];
       String offset = data['utc_offset'].toString().substring(1,3);
-      // print(datetime);
-      // print(offset);
+      print(datetime);
+      print(offset);
 
       // create Datetime object
-      DateTime now = DateTime.parse(datetime);
-      now.add(Duration(hours: int.parse(offset)));
+      // DateTime now = DateTime.parse(datetime);
+      // now.add(Duration(hours: int.parse(offset)));
+      int offsetToMs = int.parse(offset) * 3600000;
+      print(offsetToMs);
+      // datetime = datetime + offsetToMs;
+      print(datetime);
+      var now = DateTime.fromMillisecondsSinceEpoch(datetime * 1000);
+      // now.add(Duration(milliseconds: offsetToMs));
+
+      print(now);
+
 
       // set the time property
       isDaytime = now.hour > 6 && now.hour < 18  ? true : false;
       time = DateFormat.jm().format(now);
+      print(time);
     } catch(e){
         print('caught error: $e');
         time = 'could not get time data';
